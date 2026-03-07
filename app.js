@@ -50,6 +50,9 @@ app.get("/", (req, res) => {
 });
 app.use("/sessions", require("./routes/sessionRoutes"));
 
+const transactionsRouter = require("./routes/transactions");
+app.use("/transactions", authMiddleware, transactionsRouter);
+
 app.use((req, res) => {
   res.status(404).send(`That page (${req.url}) was not found.`);
 });
