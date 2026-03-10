@@ -4,9 +4,9 @@
 	<form method="POST" action="/transactions/update/<%= transaction._id %>">
 		<div>
 			<label name="kind">Type: </label>
-			<select name="kind" select="<%= transaction.kind %>">
-				<option value= "expense">Expense</option>
-				<option value="income">Income</option>
+			<select name="kind">
+				<option value= "expense" <%= transaction.kind === 'expense' ? 'selected' : '' %>>Expense</option>
+				<option value="income" <%= transaction.kind === 'income' ? 'selected' : '' %>>Income</option>
 			</select>
 		</div>
 		<div>
