@@ -1,0 +1,70 @@
+<%- include("partials/head.ejs") %> <%- include("partials/header.ejs") %>
+<h2>Transaction Form</h2>
+<% if (transaction) { %>
+	<form method="POST" action="/transactions/update/<%= transaction._id %>">
+		<div>
+			<label name="kind">Type: </label>
+			<select name="kind" select="<%= transaction.kind %>">
+				<option value= "expense">Expense</option>
+				<option value="income">Income</option>
+			</select>
+		</div>
+		<div>
+			<label name="amount">Amount: </label>
+			<input name="amount" type="number" step="0.01" min="0" value="<%= transaction.amount %>"/>
+		</div>
+		<div>
+			<label name="date">Date: </label>
+			<input name="date" type="date" value="<%= transaction.date %>"/>
+		</div>
+		<div>
+			<label name="recurring">Recurring: </label>
+			<input name="recurring" type="checkbox" value="true" <%= transaction.recurring ? 'checked' : '' %> />
+		</div>
+		<div>
+			<label name="description">Description: </label>
+			<input name="description" value="<%= transaction.description %>"/>
+		</div>
+		<div>
+			<button>Update Transaction</button>
+			<a href="/transactions">
+      			<button type="button">Cancel</button>
+    		</a>
+		</div>
+		<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+	</form>
+<% } else { %>
+	<form method="POST" action="/transactions">
+		<div>
+			<label name="kind">Type: </label>
+			<select name="kind">
+				<option value= "expense">Expense</option>
+				<option value="income">Income</option>
+			</select>
+		</div>
+		<div>
+			<label name="amount">Amount: </label>
+			<input name="amount" type="number" step="0.01" min="0" placeholder="0.00"/>
+		</div>
+		<div>
+			<label name="date">Date: </label>
+			<input name="date" type="date"/>
+		</div>
+		<div>
+			<label name="recurring">Recurring: </label>
+			<input name="recurring" type="checkbox" value="true"/>
+		</div>
+		<div>
+			<label name="description">Description: </label>
+			<input name="description"/>
+		</div>
+		<div>
+			<button>Add Transaction</button>
+			<a href="/transactions">
+      			<button type="button">Cancel</button>
+    		</a>
+		</div>
+		<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+	</form>
+<% } %>
+<%- include("partials/footer.ejs") %>

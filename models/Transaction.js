@@ -12,7 +12,7 @@ const TransactionSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date()
+    required: [true, "Please provide a date"]
   },
   recurring: {
     type: Boolean,
