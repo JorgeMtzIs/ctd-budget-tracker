@@ -17,7 +17,7 @@ const authMiddleware = require("./middleware/auth");
 const cookieParser = require("cookie-parser");
 const csrf = require("host-csrf");
 app.use(cookieParser(process.env.COOKIE_SECRET));
-const csrfMiddleware = csrf.csrf({ sameSite: "strict" });
+const csrfMiddleware = csrf.csrf();
 
 const store = new MongoDBStore({
   // may throw an error, which won't be caught
