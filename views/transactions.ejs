@@ -1,63 +1,89 @@
 <%- include("partials/head.ejs") %> <%- include("partials/header.ejs") %>
 	<h2>Transactions List</h2>
-	<h3>Expenses</h3>
-	<table id="expense-table">
-	<tr id="expense-table-header">
-		<th>Amount</th>
-		<th>Date</th>
-		<th>Recurring</th>
-		<th>Description</th>
-	</tr>
-	<% if (expenses && expenses.length) {%>
-		<% expenses.forEach((expense) => {%>
-			<tr>
-				<td><%= expense.amount %></td>
-				<td><%= expense.date.toLocaleDateString() %></td>
-				<td><%= expense.recurring ? "Yes" : "No" %></td>
-				<td><%= expense.description %></td>
-				<td>
-					<a href="/transactions/edit/<%= expense.id %>">
-						<button type="button">edit</button>
-					</a>
-				</td>
-				<td><form method="POST" action="/transactions/delete/<%= expense.id %>" style="display: inline">
-						<button>delete</button>
-						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
-					</form>
-				</td>
+	
+	<div class="table-container">
+		<div class="table-section">
+			<h3>Expenses</h3>
+			<table id="expense-table">
+			<tr id="expense-table-header">
+				<th>Amount</th>
+				<th>Date</th>
+				<th>Recurring</th>
+				<th>Description</th>
 			</tr>
-			<% }) %>
-		<% } %>
-	</table>
-	<h3>Income</h3>
-	<table id="income-table">
-	<tr id="income-table-header">
-		<th>Amount</th>
-		<th>Date</th>
-		<th>Recurring</th>
-		<th>Description</th>
-	</tr>
-	<% if (incomes && incomes.length) {%>
-		<% incomes.forEach((income) => {%>
-			<tr>
-				<td><%= income.amount %></td>
-				<td><%= income.date.toLocaleDateString() %></td>
-				<td><%= income.recurring ? "Yes" : "No" %></td>
-				<td><%= income.description %></td>
-				<td>
-					<a href="/transactions/edit/<%= income.id %>">
-						<button type="button">edit</button>
-					</a>
-				</td>
-				<td><form method="POST" action="/transactions/delete/<%= income.id %>" style="display: inline">
-						<button>delete</button>
-						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
-					</form>
-				</td>
+			<% if (expenses && expenses.length) {%>
+				<% expenses.forEach((expense) => {%>
+					<tr>
+						<td><%= expense.amount %></td>
+						<td><%= expense.date.toLocaleDateString() %></td>
+						<td><%= expense.recurring ? "Yes" : "No" %></td>
+						<td><%= expense.description %></td>
+						<td>
+							<a href="/transactions/edit/<%= expense.id %>">
+								<button type="button">edit</button>
+							</a>
+						</td>
+						<td><form method="POST" action="/transactions/delete/<%= expense.id %>" style="display: inline">
+								<button>delete</button>
+								<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+							</form>
+						</td>
+					</tr>
+					<% }) %>
+				<% } %>
+				<tfoot>
+					<tr>
+						<td><strong>Total:</strong></td>
+						<td colspan="3"><strong><%= totalExpense.toFixed(2) %></strong></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+		<div class="table-section">
+			<h3>Income</h3>
+			<table id="income-table">
+			<tr id="income-table-header">
+				<th>Amount</th>
+				<th>Date</th>
+				<th>Recurring</th>
+				<th>Description</th>
 			</tr>
-			<% }) %>
+			<% if (incomes && incomes.length) {%>
+				<% incomes.forEach((income) => {%>
+					<tr>
+						<td><%= income.amount %></td>
+						<td><%= income.date.toLocaleDateString() %></td>
+						<td><%= income.recurring ? "Yes" : "No" %></td>
+						<td><%= income.description %></td>
+						<td>
+							<a href="/transactions/edit/<%= income.id %>">
+								<button type="button">edit</button>
+							</a>
+						</td>
+						<td><form method="POST" action="/transactions/delete/<%= income.id %>" style="display: inline">
+								<button>delete</button>
+								<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+							</form>
+						</td>
+					</tr>
+					<% }) %>
+				<% } %>
+				<tfoot>
+					<tr>
+						<td><strong>Total:</strong></td>
+						<td colspan="3"><strong><%= totalIncome.toFixed(2) %></strong></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	<div style="text-align: center;">
+		<% if (totalExpense > totalIncome) {%>
+			<h3>You are over budget!</h3>
+		<% } else if (totalExpense != 0 && totalIncome != 0) { %>
+			<h3>Your budget looks good!</h3>
 		<% } %>
-	</table>
+	</div>
 	<a href="/transactions/new">
 			<button type="button">add transaction</button>
 	</a>

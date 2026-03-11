@@ -62,6 +62,7 @@ app.use((req, res, next) => {
 
 app.use(require("connect-flash")());
 app.use(require("./middleware/storeLocals"));
+app.use(express.static("public"));
 app.get("/", (req, res) => {
   res.render("index");
 });

@@ -10,7 +10,15 @@ const getTransactions = async (req, res) => {
     createdBy: req.user._id,
     kind: "income"
   }).sort("createdAt");
-  res.render("transactions", { expenses, incomes });
+  let totalExpense = 0;
+  let totalIncome = 0;
+  expenses.forEach((expense) => {
+    totalExpense += expense.amount;
+  });
+  incomes.forEach((income) => {
+    totalIncome += income.amount;
+  });
+  res.render("transactions", { expenses, incomes, totalExpense, totalIncome });
 };
 
 const createTransaction = async (req, res) => {
